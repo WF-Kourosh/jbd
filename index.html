@@ -28,8 +28,13 @@
             text-align: center;
             z-index: 10;
             padding: 0 20px;
+            margin: 0;
+            min-height: 30px; /* Reserve space to prevent layout shift */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             opacity: 0.8;
-            transition: color 1s ease;
+            transition: color 1s ease, letter-spacing 1s ease;
         }
 
         /* --- The Elegant Candles --- */
@@ -81,13 +86,14 @@
             bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 12px 30px;
+            padding: 10px 30px;
             border: 1px solid rgba(64, 224, 208, 0.4); /* Thin, elegant outline */
             border-radius: 40px;
             z-index: 4;
             background: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(4px);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             color: #40e0d0;
@@ -98,6 +104,7 @@
             cursor: pointer;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            line-height: 1.6;
             opacity: 0;
             pointer-events: none;
             transition: all 0.4s ease;
@@ -273,7 +280,7 @@
 </head>
 <body>
 
-<h1 id="message">Happy 33rd, Jasmin</h1>
+<h1 id="message"></h1>
 
 <div class="candle-container" id="candle-container">
     <div class="match" id="match"></div>
@@ -302,7 +309,7 @@
         </div>
     </div>
 
-    <div class="candle-base" id="candle-base">Touch & Exhale</div>
+    <div class="candle-base" id="candle-base"><span>&</span><span>Touch</span></div>
 </div>
 
 <button id="start-btn">Ignite</button>
@@ -380,7 +387,7 @@
 
             // Minimalist reveal message
             const msg = document.getElementById('message');
-            msg.innerText = "Make A Wish";
+            msg.innerText = "Happy 33rd, Jasmin";
             msg.style.color = "#ffdf70";
             msg.style.letterSpacing = "10px";
 
@@ -409,7 +416,7 @@
         if (isHoldingBase && !isBlownOut) {
             e.preventDefault();
             isHoldingBase = false;
-            document.getElementById('message').innerText = "Touch & Breathe";
+            document.getElementById('message').innerText = "Make A Wish";
             const container = document.getElementById('candle-container');
             container.style.setProperty('--blow-scale', '1');
             container.style.setProperty('--blow-skew', '0deg');
@@ -453,7 +460,8 @@
             bufferLength = analyser.frequencyBinCount;
             dataArray = new Uint8Array(bufferLength);
 
-            btn.style.display = 'none';
+            btn.style.visibility = 'hidden';
+            btn.style.pointerEvents = 'none';
             document.getElementById('message').innerText = "";
 
             const match = document.getElementById('match');
@@ -465,7 +473,7 @@
 
             setTimeout(() => {
                 document.getElementById('candle-container').classList.add('ready');
-                document.getElementById('message').innerText = "Touch & Breathe";
+                document.getElementById('message').innerText = "Make A Wish";
             }, 3000);
 
         } catch (err) {
