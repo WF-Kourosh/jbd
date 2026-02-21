@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 33rd, Jasmin</title>
+    <style>
+        /* --- Minimalist Zen Background --- */
+        body {
+            /* A deep, calming dark teal/slate */
+            background: radial-gradient(circle at center, #102020 0%, #050a0a 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: #cce7e7;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-weight: 200; /* Ultra-thin, elegant font */
+            letter-spacing: 6px; /* Breathes */
+            text-transform: uppercase;
+            font-size: 20px;
+            text-align: center;
+            z-index: 10;
+            padding: 0 20px;
+            opacity: 0.8;
+            transition: color 1s ease;
+        }
+
+        /* --- The Elegant Candles --- */
+        .candle-container {
+            position: relative;
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            --blow-scale: 1;
+            --blow-skew: 0deg;
+            --blow-x: 0px;
+        }
+
+        .numbers-wrapper {
+            display: flex;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+            padding-bottom: 40px;
+        }
+
+        .number-candle {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Frosted Sea-Glass Effect */
+        .number {
+            font-size: 150px;
+            font-weight: 100; /* Very thin */
+            line-height: 1;
+            margin: 0;
+            user-select: none;
+
+            /* Creates a soft, glowing gradient text */
+            background: linear-gradient(180deg, #e0ffff 0%, #40e0d0 50%, #1a8070 100%);
+            -webkit-background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.5));
+            opacity: 0.9;
+        }
+
+        /* --- The Mindful Base --- */
+        .candle-base {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 30px;
+            border: 1px solid rgba(64, 224, 208, 0.4); /* Thin, elegant outline */
+            border-radius: 40px;
+            z-index: 4;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #40e0d0;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+
+        .candle-container.ready .candle-base {
+            opacity: 1;
+            pointer-events: auto;
+            animation: gentle-breathe 3s infinite ease-in-out;
+        }
+
+        .candle-base:active {
+            background: rgba(64, 224, 208, 0.1);
+            transform: translateX(-50%) scale(0.98);
+            border-color: rgba(64, 224, 208, 0.8);
+        }
+
+        @keyframes gentle-breathe {
+            0%, 100% { box-shadow: 0 0 10px rgba(64, 224, 208, 0.0); }
+            50% { box-shadow: 0 0 20px rgba(64, 224, 208, 0.3); }
+        }
+
+        /* --- The Delicate Wicks & Flames --- */
+        .wick {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px; /* Much thinner */
+            height: 18px;
+            background: #2a2a2a;
+            border-radius: 2px;
+            z-index: -1;
+        }
+
+        .flame {
+            position: absolute;
+            top: -26px;
+            left: 50%;
+            transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) skewX(var(--blow-skew));
+            width: 14px; /* Slimmer flame */
+            height: 35px;
+            /* A softer, warmer, more natural light */
+            background: radial-gradient(ellipse at bottom, #ffffff 10%, #ffdf70 40%, #ff8c00 100%);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 15px rgba(255, 223, 112, 0.6), 0 0 40px rgba(255, 140, 0, 0.4);
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.1s ease-out;
+        }
+
+        .number-candle.lit .flame {
+            opacity: 1;
+            animation: flicker 2s infinite ease-in-out alternate; /* Slower, calmer flicker */
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) scaleX(0.95) skewX(calc(var(--blow-skew) - 1deg)); opacity: 0.85; }
+            100% { transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) scaleX(1.05) skewX(calc(var(--blow-skew) + 1deg)); opacity: 1; }
+        }
+
+        .number-candle.blown-out .flame {
+            opacity: 0;
+            animation: none;
+            transition: opacity 0.2s ease;
+        }
+
+        /* --- The Elegant Matchstick --- */
+        .match {
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            width: 80px;
+            height: 2px; /* Very thin line */
+            background: #7a6b58;
+            opacity: 0;
+            z-index: 10;
+            transform-origin: left center;
+            pointer-events: none;
+        }
+
+        .match::after {
+            content: '🔥';
+            position: absolute;
+            left: -14px;
+            top: -12px;
+            font-size: 16px; /* Smaller flame */
+            filter: drop-shadow(0 0 10px rgba(255,150,0,0.5));
+        }
+
+        .animate-match {
+            animation: strikeMatch 4s ease-in-out forwards; /* Slower, graceful sweep */
+        }
+
+        @keyframes strikeMatch {
+            0% { transform: translateX(150px) translateY(-50px) rotate(45deg); opacity: 0; }
+            15% { opacity: 1; }
+            /* Symmetrical alignment for the new thin font */
+            35% { transform: translateX(40px) translateY(12px) rotate(15deg); }
+            50% { transform: translateX(-40px) translateY(12px) rotate(5deg); }
+            75% { transform: translateX(-150px) translateY(-20px) rotate(-20deg); opacity: 1; }
+            100% { transform: translateX(-200px) translateY(-20px) rotate(-20deg); opacity: 0; }
+        }
+
+        /* --- Soft Smoke --- */
+        .smoke-group {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+
+        .number-candle.blown-out .smoke-group { display: block; }
+
+        .smoke {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(200, 220, 220, 0.4);
+            border-radius: 50%;
+            filter: blur(4px);
+        }
+
+        .s1 { animation: drift-up 3s infinite ease-out 0s; }
+        .s2 { animation: drift-up 3s infinite ease-out 0.8s; left: -8px; }
+        .s3 { animation: drift-up 3s infinite ease-out 1.6s; left: 8px; }
+
+        @keyframes drift-up {
+            0% { transform: translateY(0) scale(1) translateX(0); opacity: 1; }
+            100% { transform: translateY(-120px) scale(4) translateX(20px); opacity: 0; }
+        }
+
+        /* --- Glowing Fireflies (Replaces Confetti) --- */
+        .orb {
+            position: absolute;
+            bottom: -50px;
+            border-radius: 50%;
+            z-index: 100;
+            opacity: 0;
+            filter: blur(2px);
+            animation: float-away ease-in forwards;
+        }
+
+        @keyframes float-away {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+        }
+
+        /* --- Minimalist Button --- */
+        button {
+            margin-top: 80px;
+            padding: 10px 30px;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 30px;
+            border: 1px solid rgba(64, 224, 208, 0.3);
+            background: transparent;
+            color: #40e0d0;
+            font-weight: 300;
+            transition: all 0.5s ease;
+            z-index: 10;
+        }
+
+        button:hover {
+            background: rgba(64, 224, 208, 0.05);
+            border-color: rgba(64, 224, 208, 0.8);
+            box-shadow: 0 0 20px rgba(64, 224, 208, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<h1 id="message">Happy 33rd, Jasmin</h1>
+
+<div class="candle-container" id="candle-container">
+    <div class="match" id="match"></div>
+
+    <div class="numbers-wrapper">
+        <div class="number-candle" id="num-left">
+            <div class="wick"></div>
+            <div class="flame"></div>
+            <div class="smoke-group">
+                <div class="smoke s1"></div>
+                <div class="smoke s2"></div>
+                <div class="smoke s3"></div>
+            </div>
+            <div class="number">3</div>
+        </div>
+
+        <div class="number-candle" id="num-right">
+            <div class="wick"></div>
+            <div class="flame"></div>
+            <div class="smoke-group">
+                <div class="smoke s1"></div>
+                <div class="smoke s2"></div>
+                <div class="smoke s3"></div>
+            </div>
+            <div class="number">3</div>
+        </div>
+    </div>
+
+    <div class="candle-base" id="candle-base">Touch & Exhale</div>
+</div>
+
+<button id="start-btn">Ignite</button>
+
+<script>
+    let audioContext;
+    let analyser;
+    let microphone;
+    let isBlownOut = false;
+    let isHoldingBase = false;
+    let dataArray;
+    let bufferLength;
+    let audioStream;
+
+    // Spawns beautiful glowing orbs that drift upwards
+    function releaseLightOrbs() {
+        const colors = ['rgba(64, 224, 208, 0.6)', 'rgba(255, 223, 112, 0.6)', 'rgba(255, 255, 255, 0.4)'];
+        for (let i = 0; i < 60; i++) {
+            let orb = document.createElement('div');
+            orb.classList.add('orb');
+
+            orb.style.left = (Math.random() * 100) + 'vw';
+            orb.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+            // Randomize sizes from tiny specs to larger blurs
+            let size = (Math.random() * 15 + 5) + 'px';
+            orb.style.width = size;
+            orb.style.height = size;
+
+            // Slow, graceful floating animation
+            orb.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            orb.style.animationDelay = (Math.random() * 2) + 's';
+
+            // Add a gentle horizontal drift
+            orb.style.transform = `translateX(${(Math.random() - 0.5) * 50}px)`;
+
+            document.body.appendChild(orb);
+            setTimeout(() => orb.remove(), 9000);
+        }
+    }
+
+    function detectBlow() {
+        if (isBlownOut || !isHoldingBase) return;
+
+        analyser.getByteFrequencyData(dataArray);
+        let sum = 0;
+        for(let i = 0; i < bufferLength / 2; i++) {
+            sum += dataArray[i];
+        }
+        let average = sum / (bufferLength / 2);
+
+        const container = document.getElementById('candle-container');
+
+        if (average > 10 && average < 80) {
+            let intensity = (average - 10) / 70;
+            container.style.setProperty('--blow-scale', Math.max(0.3, 1 - (intensity * 0.7)));
+            container.style.setProperty('--blow-skew', `${intensity * -60}deg`);
+            container.style.setProperty('--blow-x', `${intensity * -25}px`);
+        } else if (average <= 10) {
+            container.style.setProperty('--blow-scale', '1');
+            container.style.setProperty('--blow-skew', '0deg');
+            container.style.setProperty('--blow-x', '0px');
+        }
+
+        if (average >= 80) {
+            isBlownOut = true;
+
+            document.getElementById('num-left').classList.remove('lit');
+            document.getElementById('num-left').classList.add('blown-out');
+
+            document.getElementById('num-right').classList.remove('lit');
+            document.getElementById('num-right').classList.add('blown-out');
+
+            document.getElementById('candle-container').classList.remove('ready');
+
+            // Minimalist reveal message
+            const msg = document.getElementById('message');
+            msg.innerText = "Make A Wish";
+            msg.style.color = "#ffdf70";
+            msg.style.letterSpacing = "10px";
+
+            releaseLightOrbs();
+
+            audioStream.getTracks().forEach(track => track.stop());
+            if (audioContext.state !== 'closed') audioContext.close();
+        } else {
+            requestAnimationFrame(detectBlow);
+        }
+    }
+
+    const candleBase = document.getElementById('candle-base');
+
+    function startHolding(e) {
+        e.preventDefault();
+        if (!isBlownOut && document.getElementById('candle-container').classList.contains('ready')) {
+            isHoldingBase = true;
+            document.getElementById('message').innerText = "Breathe Out";
+            detectBlow();
+        }
+    }
+
+    function stopHolding(e) {
+        e.preventDefault();
+        if (isHoldingBase && !isBlownOut) {
+            isHoldingBase = false;
+            document.getElementById('message').innerText = "Touch & Breathe";
+            const container = document.getElementById('candle-container');
+            container.style.setProperty('--blow-scale', '1');
+            container.style.setProperty('--blow-skew', '0deg');
+            container.style.setProperty('--blow-x', '0px');
+        }
+    }
+
+    candleBase.addEventListener('mousedown', startHolding);
+    window.addEventListener('mouseup', stopHolding);
+    candleBase.addEventListener('touchstart', startHolding, {passive: false});
+    window.addEventListener('touchend', stopHolding);
+
+    document.getElementById('start-btn').addEventListener('click', async function() {
+        this.innerText = "Lighting...";
+        this.style.opacity = "0.5";
+
+        try {
+            audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            microphone = audioContext.createMediaStreamSource(audioStream);
+
+            microphone.connect(analyser);
+            analyser.fftSize = 512;
+
+            bufferLength = analyser.frequencyBinCount;
+            dataArray = new Uint8Array(bufferLength);
+
+            this.style.display = 'none';
+            document.getElementById('message').innerText = "";
+
+            const match = document.getElementById('match');
+            match.classList.add('animate-match');
+
+            // The sweeping animation is slightly slower now, so the timings are adjusted
+            setTimeout(() => { document.getElementById('num-right').classList.add('lit'); }, 1400);
+            setTimeout(() => { document.getElementById('num-left').classList.add('lit'); }, 1900);
+
+            setTimeout(() => {
+                document.getElementById('candle-container').classList.add('ready');
+                document.getElementById('message').innerText = "Touch & Breathe";
+            }, 3000);
+
+        } catch (err) {
+            alert("Please allow microphone access to ignite the candles.");
+            console.error(err);
+            this.innerText = "Ignite";
+            this.style.opacity = "1";
+        }
+    });
+</script>
+</body>
+</html>
