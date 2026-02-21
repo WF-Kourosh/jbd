@@ -21,20 +21,48 @@
         }
 
         h1 {
-            font-weight: 200; /* Ultra-thin, elegant font */
-            letter-spacing: 6px; /* Breathes */
+            font-weight: 200;
+            letter-spacing: 6px;
             text-transform: uppercase;
             font-size: 20px;
             text-align: center;
             z-index: 10;
             padding: 0 20px;
             margin: 0;
-            min-height: 30px; /* Reserve space to prevent layout shift */
+            min-height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        h1.visible {
             opacity: 0.8;
-            transition: color 1s ease, letter-spacing 1s ease;
+        }
+
+        h1.birthday-reveal {
+            animation: revealBirthday 2.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes revealBirthday {
+            0% {
+                opacity: 0;
+                letter-spacing: 2px;
+                transform: scale(0.92);
+                filter: blur(6px);
+            }
+            40% {
+                opacity: 0.6;
+                filter: blur(2px);
+            }
+            100% {
+                opacity: 1;
+                letter-spacing: 10px;
+                transform: scale(1);
+                filter: blur(0px);
+                color: #ffdf70;
+            }
         }
 
         /* --- The Elegant Candles --- */
@@ -157,18 +185,36 @@
 
         .number-candle.lit .flame {
             opacity: 1;
-            animation: flicker 2s infinite ease-in-out alternate; /* Slower, calmer flicker */
+            animation: flicker 3s infinite ease-in-out;
         }
 
         @keyframes flicker {
-            0% { transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) scaleX(0.95) skewX(calc(var(--blow-skew) - 1deg)); opacity: 0.85; }
-            100% { transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) scaleX(1.05) skewX(calc(var(--blow-skew) + 1deg)); opacity: 1; }
+            0%   { transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) scaleX(1) skewX(var(--blow-skew)); opacity: 1; box-shadow: 0 0 15px rgba(255, 223, 112, 0.6), 0 0 40px rgba(255, 140, 0, 0.4); }
+            10%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 1.04)) scaleX(0.96) skewX(calc(var(--blow-skew) + 2deg)); opacity: 0.9; }
+            20%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 0.95)) scaleX(1.03) skewX(calc(var(--blow-skew) - 1deg)); opacity: 1; box-shadow: 0 0 20px rgba(255, 223, 112, 0.7), 0 0 50px rgba(255, 140, 0, 0.5); }
+            35%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 1.02)) scaleX(0.98) skewX(calc(var(--blow-skew) + 1deg)); opacity: 0.85; }
+            50%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 0.97)) scaleX(1.02) skewX(calc(var(--blow-skew) - 2deg)); opacity: 1; box-shadow: 0 0 12px rgba(255, 223, 112, 0.5), 0 0 35px rgba(255, 140, 0, 0.3); }
+            65%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 1.05)) scaleX(0.97) skewX(calc(var(--blow-skew) + 3deg)); opacity: 0.92; }
+            80%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 0.98)) scaleX(1.01) skewX(calc(var(--blow-skew) - 1deg)); opacity: 1; box-shadow: 0 0 18px rgba(255, 223, 112, 0.65), 0 0 45px rgba(255, 140, 0, 0.45); }
+            100% { transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) scaleX(1) skewX(var(--blow-skew)); opacity: 1; box-shadow: 0 0 15px rgba(255, 223, 112, 0.6), 0 0 40px rgba(255, 140, 0, 0.4); }
         }
 
         .number-candle.blown-out .flame {
             opacity: 0;
             animation: none;
             transition: opacity 0.2s ease;
+        }
+
+        /* Warm ambient glow cast by the flames onto the numbers */
+        .number-candle.lit .number {
+            filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.5))
+                    drop-shadow(0 -30px 40px rgba(255, 200, 80, 0.15));
+            transition: filter 1s ease;
+        }
+
+        .number-candle.blown-out .number {
+            filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.5));
+            transition: filter 1.5s ease;
         }
 
         /* --- The Elegant Matchstick --- */
@@ -387,9 +433,11 @@
 
             // Minimalist reveal message
             const msg = document.getElementById('message');
+            msg.className = '';
             msg.innerText = "Happy 33rd, Jasmin";
-            msg.style.color = "#ffdf70";
-            msg.style.letterSpacing = "10px";
+            // Trigger the smooth birthday reveal animation
+            void msg.offsetWidth; // force reflow
+            msg.classList.add('birthday-reveal');
 
             releaseLightOrbs();
 
@@ -406,7 +454,9 @@
         e.preventDefault();
         if (!isBlownOut && document.getElementById('candle-container').classList.contains('ready')) {
             isHoldingBase = true;
-            document.getElementById('message').innerText = "Breathe Out";
+            const msg = document.getElementById('message');
+            msg.innerText = "Breathe Out";
+            msg.classList.add('visible');
             detectBlow();
         }
     }
@@ -416,7 +466,9 @@
         if (isHoldingBase && !isBlownOut) {
             e.preventDefault();
             isHoldingBase = false;
-            document.getElementById('message').innerText = "Make A Wish";
+            const msg = document.getElementById('message');
+            msg.innerText = "Make A Wish";
+            msg.classList.add('visible');
             const container = document.getElementById('candle-container');
             container.style.setProperty('--blow-scale', '1');
             container.style.setProperty('--blow-skew', '0deg');
@@ -462,7 +514,9 @@
 
             btn.style.visibility = 'hidden';
             btn.style.pointerEvents = 'none';
-            document.getElementById('message').innerText = "";
+            const msg = document.getElementById('message');
+            msg.innerText = "";
+            msg.classList.remove('visible', 'birthday-reveal');
 
             const match = document.getElementById('match');
             match.classList.add('animate-match');
@@ -473,7 +527,9 @@
 
             setTimeout(() => {
                 document.getElementById('candle-container').classList.add('ready');
-                document.getElementById('message').innerText = "Make A Wish";
+                const msg = document.getElementById('message');
+                msg.innerText = "Make A Wish";
+                msg.classList.add('visible');
             }, 3000);
 
         } catch (err) {
