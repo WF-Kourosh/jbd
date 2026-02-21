@@ -405,8 +405,9 @@
     }
 
     function stopHolding(e) {
-        e.preventDefault();
+        // Only preventDefault if we were actually holding the candle base
         if (isHoldingBase && !isBlownOut) {
+            e.preventDefault();
             isHoldingBase = false;
             document.getElementById('message').innerText = "Touch & Breathe";
             const container = document.getElementById('candle-container');
@@ -421,14 +422,28 @@
     candleBase.addEventListener('touchstart', startHolding, {passive: false});
     window.addEventListener('touchend', stopHolding);
 
-    document.getElementById('start-btn').addEventListener('click', async function() {
-        this.innerText = "Lighting...";
-        this.style.opacity = "0.5";
+    async function ignite(btn) {
+        // Prevent double-tap
+        if (btn.dataset.igniting === 'true') return;
+        btn.dataset.igniting = 'true';
+
+        btn.innerText = "Lighting...";
+        btn.style.opacity = "0.5";
 
         try {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                throw new Error("Microphone API not available. Make sure you're using HTTPS.");
+            }
+
             audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+            // iOS Safari requires an explicit resume within a user gesture
+            if (audioContext.state === 'suspended') {
+                await audioContext.resume();
+            }
+
             analyser = audioContext.createAnalyser();
             microphone = audioContext.createMediaStreamSource(audioStream);
 
@@ -438,7 +453,7 @@
             bufferLength = analyser.frequencyBinCount;
             dataArray = new Uint8Array(bufferLength);
 
-            this.style.display = 'none';
+            btn.style.display = 'none';
             document.getElementById('message').innerText = "";
 
             const match = document.getElementById('match');
@@ -454,11 +469,22 @@
             }, 3000);
 
         } catch (err) {
-            alert("Please allow microphone access to ignite the candles.");
+            alert("Please allow microphone access to ignite the candles. " + err.message);
             console.error(err);
-            this.innerText = "Ignite";
-            this.style.opacity = "1";
+            btn.innerText = "Ignite";
+            btn.style.opacity = "1";
+            btn.dataset.igniting = 'false';
         }
+    }
+
+    const startBtn = document.getElementById('start-btn');
+    startBtn.addEventListener('click', function(e) {
+        ignite(this);
+    });
+    // Ensure it also works on mobile via touchend in case click is not synthesized
+    startBtn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        ignite(this);
     });
 </script>
 </body>
