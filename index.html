@@ -322,6 +322,26 @@
             border-color: rgba(64, 224, 208, 0.8);
             box-shadow: 0 0 20px rgba(64, 224, 208, 0.2);
         }
+
+        /* --- Volume Hint --- */
+        .volume-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(64, 224, 208, 0.4);
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 1s ease;
+            pointer-events: none;
+        }
+
+        .volume-hint.visible {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -360,6 +380,12 @@
 
 <button id="start-btn">Ignite</button>
 
+<div class="volume-hint" id="volume-hint">🔈 turn your volume up</div>
+
+<!-- Audio files: place your .m4a recordings in the audio/ folder -->
+<audio id="audio-loop" src="audio/ha.m4a" loop preload="auto"></audio>
+<audio id="audio-blow" src="audio/ppy-birthday.m4a" preload="auto"></audio>
+
 <script>
     let audioContext;
     let analyser;
@@ -369,6 +395,10 @@
     let dataArray;
     let bufferLength;
     let audioStream;
+
+    // Audio elements
+    const audioLoop = document.getElementById('audio-loop');
+    const audioBlow = document.getElementById('audio-blow');
 
     // Spawns beautiful glowing orbs that drift upwards
     function releaseLightOrbs() {
@@ -440,6 +470,14 @@
             msg.classList.add('birthday-reveal');
 
             releaseLightOrbs();
+
+            // Stop the looping "ha" audio and play "ppy birthday"
+            audioLoop.pause();
+            audioLoop.currentTime = 0;
+            audioBlow.play().catch(() => {});
+
+            // Hide volume hint
+            document.getElementById('volume-hint').classList.remove('visible');
 
             audioStream.getTracks().forEach(track => track.stop());
             if (audioContext.state !== 'closed') audioContext.close();
@@ -518,12 +556,20 @@
             msg.innerText = "";
             msg.classList.remove('visible', 'birthday-reveal');
 
+            // Show volume hint
+            document.getElementById('volume-hint').classList.add('visible');
+
             const match = document.getElementById('match');
             match.classList.add('animate-match');
 
             // The sweeping animation is slightly slower now, so the timings are adjusted
             setTimeout(() => { document.getElementById('num-right').classList.add('lit'); }, 1400);
             setTimeout(() => { document.getElementById('num-left').classList.add('lit'); }, 1900);
+
+            // Start the looping "ha" audio once both candles are lit
+            setTimeout(() => {
+                audioLoop.play().catch(() => {});
+            }, 1900);
 
             setTimeout(() => {
                 document.getElementById('candle-container').classList.add('ready');
