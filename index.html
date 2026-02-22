@@ -402,6 +402,7 @@
     let microphone;
     let isBlownOut = false;
     let isHoldingBase = false;
+    let blowGracePeriod = false;
     let dataArray;
     let bufferLength;
     let audioStream;
@@ -460,7 +461,7 @@
             container.style.setProperty('--blow-x', '0px');
         }
 
-        if (average >= 80) {
+        if (average >= 80 && !blowGracePeriod) {
             isBlownOut = true;
 
             document.getElementById('num-left').classList.remove('lit');
@@ -502,7 +503,9 @@
         e.preventDefault();
         if (!isBlownOut && document.getElementById('candle-container').classList.contains('ready')) {
             isHoldingBase = true;
-            audioLoop.volume = 0.33;
+            audioLoop.volume = 0.25;
+            blowGracePeriod = true;
+            setTimeout(() => { blowGracePeriod = false; }, 750);
             const msg = document.getElementById('message');
             msg.innerText = "Breathe Out";
             msg.classList.add('visible');
