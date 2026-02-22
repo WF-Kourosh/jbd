@@ -492,6 +492,7 @@
         e.preventDefault();
         if (!isBlownOut && document.getElementById('candle-container').classList.contains('ready')) {
             isHoldingBase = true;
+            audioLoop.volume = 0.33;
             const msg = document.getElementById('message');
             msg.innerText = "Breathe Out";
             msg.classList.add('visible');
@@ -504,6 +505,7 @@
         if (isHoldingBase && !isBlownOut) {
             e.preventDefault();
             isHoldingBase = false;
+            audioLoop.volume = 1.0;
             const msg = document.getElementById('message');
             msg.innerText = "Make A Wish";
             msg.classList.add('visible');
