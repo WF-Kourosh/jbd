@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,10 +53,12 @@
                 transform: scale(0.92);
                 filter: blur(6px);
             }
+
             40% {
                 opacity: 0.6;
                 filter: blur(2px);
             }
+
             100% {
                 opacity: 1;
                 letter-spacing: 10px;
@@ -105,7 +108,8 @@
         /* Frosted Sea-Glass Effect */
         .number {
             font-size: 150px;
-            font-weight: 100; /* Very thin */
+            font-weight: 100;
+            /* Very thin */
             line-height: 1;
             margin: 0;
             user-select: none;
@@ -125,7 +129,8 @@
             left: 50%;
             transform: translateX(-50%);
             padding: 10px 30px;
-            border: 1px solid rgba(64, 224, 208, 0.4); /* Thin, elegant outline */
+            border: 1px solid rgba(64, 224, 208, 0.4);
+            /* Thin, elegant outline */
             border-radius: 40px;
             z-index: 4;
             background: rgba(0, 0, 0, 0.2);
@@ -161,8 +166,15 @@
         }
 
         @keyframes gentle-breathe {
-            0%, 100% { box-shadow: 0 0 10px rgba(64, 224, 208, 0.0); }
-            50% { box-shadow: 0 0 20px rgba(64, 224, 208, 0.3); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px rgba(64, 224, 208, 0.0);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(64, 224, 208, 0.3);
+            }
         }
 
         /* --- The Delicate Wicks & Flames --- */
@@ -171,7 +183,8 @@
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 2px; /* Much thinner */
+            width: 2px;
+            /* Much thinner */
             height: 18px;
             background: #2a2a2a;
             border-radius: 2px;
@@ -183,7 +196,8 @@
             top: -26px;
             left: 50%;
             transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) skewX(var(--blow-skew));
-            width: 14px; /* Slimmer flame */
+            width: 14px;
+            /* Slimmer flame */
             height: 35px;
             /* A softer, warmer, more natural light */
             background: radial-gradient(ellipse at bottom, #ffffff 10%, #ffdf70 40%, #ff8c00 100%);
@@ -199,14 +213,50 @@
         }
 
         @keyframes flicker {
-            0%   { transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) scaleX(1) skewX(var(--blow-skew)); opacity: 1; box-shadow: 0 0 15px rgba(255, 223, 112, 0.6), 0 0 40px rgba(255, 140, 0, 0.4); }
-            10%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 1.04)) scaleX(0.96) skewX(calc(var(--blow-skew) + 2deg)); opacity: 0.9; }
-            20%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 0.95)) scaleX(1.03) skewX(calc(var(--blow-skew) - 1deg)); opacity: 1; box-shadow: 0 0 20px rgba(255, 223, 112, 0.7), 0 0 50px rgba(255, 140, 0, 0.5); }
-            35%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 1.02)) scaleX(0.98) skewX(calc(var(--blow-skew) + 1deg)); opacity: 0.85; }
-            50%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 0.97)) scaleX(1.02) skewX(calc(var(--blow-skew) - 2deg)); opacity: 1; box-shadow: 0 0 12px rgba(255, 223, 112, 0.5), 0 0 35px rgba(255, 140, 0, 0.3); }
-            65%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 1.05)) scaleX(0.97) skewX(calc(var(--blow-skew) + 3deg)); opacity: 0.92; }
-            80%  { transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 0.98)) scaleX(1.01) skewX(calc(var(--blow-skew) - 1deg)); opacity: 1; box-shadow: 0 0 18px rgba(255, 223, 112, 0.65), 0 0 45px rgba(255, 140, 0, 0.45); }
-            100% { transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) scaleX(1) skewX(var(--blow-skew)); opacity: 1; box-shadow: 0 0 15px rgba(255, 223, 112, 0.6), 0 0 40px rgba(255, 140, 0, 0.4); }
+            0% {
+                transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) scaleX(1) skewX(var(--blow-skew));
+                opacity: 1;
+                box-shadow: 0 0 15px rgba(255, 223, 112, 0.6), 0 0 40px rgba(255, 140, 0, 0.4);
+            }
+
+            10% {
+                transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 1.04)) scaleX(0.96) skewX(calc(var(--blow-skew) + 2deg));
+                opacity: 0.9;
+            }
+
+            20% {
+                transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 0.95)) scaleX(1.03) skewX(calc(var(--blow-skew) - 1deg));
+                opacity: 1;
+                box-shadow: 0 0 20px rgba(255, 223, 112, 0.7), 0 0 50px rgba(255, 140, 0, 0.5);
+            }
+
+            35% {
+                transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 1.02)) scaleX(0.98) skewX(calc(var(--blow-skew) + 1deg));
+                opacity: 0.85;
+            }
+
+            50% {
+                transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 0.97)) scaleX(1.02) skewX(calc(var(--blow-skew) - 2deg));
+                opacity: 1;
+                box-shadow: 0 0 12px rgba(255, 223, 112, 0.5), 0 0 35px rgba(255, 140, 0, 0.3);
+            }
+
+            65% {
+                transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 1.05)) scaleX(0.97) skewX(calc(var(--blow-skew) + 3deg));
+                opacity: 0.92;
+            }
+
+            80% {
+                transform: translateX(calc(-50% + var(--blow-x))) scaleY(calc(var(--blow-scale) * 0.98)) scaleX(1.01) skewX(calc(var(--blow-skew) - 1deg));
+                opacity: 1;
+                box-shadow: 0 0 18px rgba(255, 223, 112, 0.65), 0 0 45px rgba(255, 140, 0, 0.45);
+            }
+
+            100% {
+                transform: translateX(calc(-50% + var(--blow-x))) scaleY(var(--blow-scale)) scaleX(1) skewX(var(--blow-skew));
+                opacity: 1;
+                box-shadow: 0 0 15px rgba(255, 223, 112, 0.6), 0 0 40px rgba(255, 140, 0, 0.4);
+            }
         }
 
         .number-candle.blown-out .flame {
@@ -217,8 +267,7 @@
 
         /* Warm ambient glow cast by the flames onto the numbers */
         .number-candle.lit .number {
-            filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.5))
-                    drop-shadow(0 -30px 40px rgba(255, 200, 80, 0.15));
+            filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.5)) drop-shadow(0 -30px 40px rgba(255, 200, 80, 0.15));
             transition: filter 1s ease;
         }
 
@@ -233,7 +282,8 @@
             top: 0px;
             left: 50%;
             width: 80px;
-            height: 2px; /* Very thin line */
+            height: 2px;
+            /* Very thin line */
             background: #7a6b58;
             opacity: 0;
             z-index: 10;
@@ -246,22 +296,44 @@
             position: absolute;
             left: -14px;
             top: -12px;
-            font-size: 16px; /* Smaller flame */
-            filter: drop-shadow(0 0 10px rgba(255,150,0,0.5));
+            font-size: 16px;
+            /* Smaller flame */
+            filter: drop-shadow(0 0 10px rgba(255, 150, 0, 0.5));
         }
 
         .animate-match {
-            animation: strikeMatch 4s ease-in-out forwards; /* Slower, graceful sweep */
+            animation: strikeMatch 4s ease-in-out forwards;
+            /* Slower, graceful sweep */
         }
 
         @keyframes strikeMatch {
-            0% { transform: translateX(150px) translateY(-50px) rotate(45deg); opacity: 0; }
-            15% { opacity: 1; }
+            0% {
+                transform: translateX(150px) translateY(-50px) rotate(45deg);
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 1;
+            }
+
             /* Symmetrical alignment for the new thin font */
-            35% { transform: translateX(40px) translateY(12px) rotate(15deg); }
-            50% { transform: translateX(-40px) translateY(12px) rotate(5deg); }
-            75% { transform: translateX(-150px) translateY(-20px) rotate(-20deg); opacity: 1; }
-            100% { transform: translateX(-200px) translateY(-20px) rotate(-20deg); opacity: 0; }
+            35% {
+                transform: translateX(40px) translateY(12px) rotate(15deg);
+            }
+
+            50% {
+                transform: translateX(-40px) translateY(12px) rotate(5deg);
+            }
+
+            75% {
+                transform: translateX(-150px) translateY(-20px) rotate(-20deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(-200px) translateY(-20px) rotate(-20deg);
+                opacity: 0;
+            }
         }
 
         /* --- Soft Smoke --- */
@@ -273,7 +345,9 @@
             display: none;
         }
 
-        .number-candle.blown-out .smoke-group { display: block; }
+        .number-candle.blown-out .smoke-group {
+            display: block;
+        }
 
         .smoke {
             position: absolute;
@@ -284,13 +358,30 @@
             filter: blur(4px);
         }
 
-        .s1 { animation: drift-up 3s infinite ease-out 0s; }
-        .s2 { animation: drift-up 3s infinite ease-out 0.8s; left: -8px; }
-        .s3 { animation: drift-up 3s infinite ease-out 1.6s; left: 8px; }
+        .s1 {
+            animation: drift-up 3s infinite ease-out 0s;
+        }
+
+        .s2 {
+            animation: drift-up 3s infinite ease-out 0.8s;
+            left: -8px;
+        }
+
+        .s3 {
+            animation: drift-up 3s infinite ease-out 1.6s;
+            left: 8px;
+        }
 
         @keyframes drift-up {
-            0% { transform: translateY(0) scale(1) translateX(0); opacity: 1; }
-            100% { transform: translateY(-120px) scale(4) translateX(20px); opacity: 0; }
+            0% {
+                transform: translateY(0) scale(1) translateX(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-120px) scale(4) translateX(20px);
+                opacity: 0;
+            }
         }
 
         /* --- Glowing Fireflies (Replaces Confetti) --- */
@@ -305,9 +396,19 @@
         }
 
         @keyframes float-away {
-            0% { transform: translateY(0) scale(0.5); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-120vh) scale(1.5);
+                opacity: 0;
+            }
         }
 
         /* --- Minimalist Button --- */
@@ -323,8 +424,10 @@
             background: transparent;
             color: #40e0d0;
             font-weight: 300;
+            -webkit-transition: all 0.5s ease;
             transition: all 0.5s ease;
             z-index: 10;
+            -webkit-tap-highlight-color: transparent;
         }
 
         button:hover {
@@ -333,11 +436,66 @@
             box-shadow: 0 0 20px rgba(64, 224, 208, 0.2);
         }
 
+        /* --- Replay Button --- */
+        #replay-btn {
+            display: none;
+            margin-top: 40px;
+            opacity: 0;
+            -webkit-transition: opacity 1s ease;
+            transition: opacity 1s ease;
+        }
+
+        #replay-btn.visible {
+            display: inline-block;
+            opacity: 1;
+        }
+
+        /* --- Inline Error Message --- */
+        .error-message {
+            margin-top: 80px;
+            padding: 16px 28px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #e8a87c;
+            border: 1px solid rgba(232, 168, 124, 0.3);
+            border-radius: 16px;
+            background: rgba(232, 168, 124, 0.05);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+            text-align: center;
+            line-height: 2;
+            z-index: 10;
+            opacity: 0;
+            -webkit-transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease;
+        }
+
+        .error-message.visible {
+            opacity: 1;
+        }
+
+        .error-message .retry-link {
+            display: inline-block;
+            margin-top: 4px;
+            color: #40e0d0;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(64, 224, 208, 0.3);
+            -webkit-tap-highlight-color: transparent;
+            -webkit-transition: border-color 0.3s ease;
+            transition: border-color 0.3s ease;
+        }
+
+        .error-message .retry-link:hover {
+            border-color: rgba(64, 224, 208, 0.8);
+        }
+
         /* --- Volume Hint --- */
         .volume-hint {
             position: fixed;
             bottom: 20px;
             left: 50%;
+            -webkit-transform: translateX(-50%);
             transform: translateX(-50%);
             font-size: 10px;
             letter-spacing: 2px;
@@ -345,6 +503,7 @@
             color: rgba(64, 224, 208, 0.4);
             z-index: 10;
             opacity: 0;
+            -webkit-transition: opacity 1s ease;
             transition: opacity 1s ease;
             pointer-events: none;
         }
@@ -354,263 +513,465 @@
         }
     </style>
 </head>
+
 <body>
 
-<h1 id="message"></h1>
+    <h1 id="message"></h1>
 
-<div class="candle-container" id="candle-container">
-    <div class="match" id="match"></div>
+    <div class="candle-container" id="candle-container">
+        <div class="match" id="match"></div>
 
-    <div class="numbers-wrapper">
-        <div class="number-candle" id="num-left">
-            <div class="wick"></div>
-            <div class="flame"></div>
-            <div class="smoke-group">
-                <div class="smoke s1"></div>
-                <div class="smoke s2"></div>
-                <div class="smoke s3"></div>
+        <div class="numbers-wrapper">
+            <div class="number-candle" id="num-left">
+                <div class="wick"></div>
+                <div class="flame"></div>
+                <div class="smoke-group">
+                    <div class="smoke s1"></div>
+                    <div class="smoke s2"></div>
+                    <div class="smoke s3"></div>
+                </div>
+                <div class="number">3</div>
             </div>
-            <div class="number">3</div>
+
+            <div class="number-candle" id="num-right">
+                <div class="wick"></div>
+                <div class="flame"></div>
+                <div class="smoke-group">
+                    <div class="smoke s1"></div>
+                    <div class="smoke s2"></div>
+                    <div class="smoke s3"></div>
+                </div>
+                <div class="number">3</div>
+            </div>
         </div>
 
-        <div class="number-candle" id="num-right">
-            <div class="wick"></div>
-            <div class="flame"></div>
-            <div class="smoke-group">
-                <div class="smoke s1"></div>
-                <div class="smoke s2"></div>
-                <div class="smoke s3"></div>
-            </div>
-            <div class="number">3</div>
-        </div>
+        <div class="candle-base" id="candle-base"><span>&</span><span>Touch</span></div>
     </div>
 
-    <div class="candle-base" id="candle-base"><span>&</span><span>Touch</span></div>
-</div>
+    <button id="start-btn">Ignite</button>
+    <button id="replay-btn">Replay ✨</button>
 
-<button id="start-btn">Ignite</button>
+    <div class="error-message" id="error-msg"></div>
 
-<div class="volume-hint" id="volume-hint">🔈 turn your volume up</div>
+    <div class="volume-hint" id="volume-hint">🔈 turn your volume up</div>
 
-<!-- Audio files: place your .m4a recordings in the audio/ folder -->
-<audio id="audio-loop" src="audio/ha.m4a" loop preload="auto"></audio>
-<audio id="audio-blow" src="audio/ppy-birthday.m4a" preload="auto"></audio>
+    <!-- Audio files: place your .m4a recordings in the audio/ folder -->
+    <audio id="audio-loop" src="audio/ha.m4a" loop preload="auto"></audio>
+    <audio id="audio-blow" src="audio/ppy-birthday.m4a" preload="auto"></audio>
 
-<script>
-    let audioContext;
-    let analyser;
-    let microphone;
-    let isBlownOut = false;
-    let isHoldingBase = false;
-    let blowGracePeriod = false;
-    let dataArray;
-    let bufferLength;
-    let audioStream;
+    <script>
+        var audioContext;
+        var analyser;
+        var microphone;
+        var isBlownOut = false;
+        var isHoldingBase = false;
+        var blowGracePeriod = false;
+        var dataArray;
+        var bufferLength;
+        var audioStream;
+        var blowThreshold = 80; // Default, will be calibrated
+        var calibrationSamples = [];
+        var isCalibrating = false;
+        var micDeniedCount = 0;
 
-    // Audio elements
-    const audioLoop = document.getElementById('audio-loop');
-    const audioBlow = document.getElementById('audio-blow');
+        // Audio elements
+        var audioLoop = document.getElementById('audio-loop');
+        var audioBlow = document.getElementById('audio-blow');
 
-    // Spawns beautiful glowing orbs that drift upwards
-    function releaseLightOrbs() {
-        const colors = ['rgba(64, 224, 208, 0.6)', 'rgba(255, 223, 112, 0.6)', 'rgba(255, 255, 255, 0.4)'];
-        for (let i = 0; i < 60; i++) {
-            let orb = document.createElement('div');
-            orb.classList.add('orb');
+        // Spawns beautiful glowing orbs that drift upwards
+        function releaseLightOrbs() {
+            var colors = ['rgba(64, 224, 208, 0.6)', 'rgba(255, 223, 112, 0.6)', 'rgba(255, 255, 255, 0.4)'];
+            for (var i = 0; i < 60; i++) {
+                var orb = document.createElement('div');
+                orb.classList.add('orb');
 
-            orb.style.left = (Math.random() * 100) + 'vw';
-            orb.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                orb.style.left = (Math.random() * 100) + 'vw';
+                orb.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
-            // Randomize sizes from tiny specs to larger blurs
-            let size = (Math.random() * 15 + 5) + 'px';
-            orb.style.width = size;
-            orb.style.height = size;
+                // Randomize sizes from tiny specs to larger blurs
+                var size = (Math.random() * 15 + 5) + 'px';
+                orb.style.width = size;
+                orb.style.height = size;
 
-            // Slow, graceful floating animation
-            orb.style.animationDuration = (Math.random() * 4 + 4) + 's';
-            orb.style.animationDelay = (Math.random() * 2) + 's';
+                // Slow, graceful floating animation
+                orb.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                orb.style.animationDelay = (Math.random() * 2) + 's';
 
-            // Add a gentle horizontal drift
-            orb.style.transform = `translateX(${(Math.random() - 0.5) * 50}px)`;
+                // Add a gentle horizontal drift
+                orb.style.transform = 'translateX(' + ((Math.random() - 0.5) * 50) + 'px)';
 
-            document.body.appendChild(orb);
-            setTimeout(() => orb.remove(), 9000);
+                document.body.appendChild(orb);
+                setTimeout(function (el) { return function () { el.remove(); }; }(orb), 9000);
+            }
         }
-    }
 
-    function detectBlow() {
-        if (isBlownOut || !isHoldingBase) return;
+        // --- Adaptive Calibration ---
+        function calibrateAmbientNoise() {
+            if (!isCalibrating || !analyser) return;
 
-        analyser.getByteFrequencyData(dataArray);
-        let sum = 0;
-        for(let i = 0; i < bufferLength / 2; i++) {
-            sum += dataArray[i];
+            analyser.getByteFrequencyData(dataArray);
+            var sum = 0;
+            for (var i = 0; i < bufferLength / 2; i++) {
+                sum += dataArray[i];
+            }
+            var average = sum / (bufferLength / 2);
+            calibrationSamples.push(average);
+
+            requestAnimationFrame(calibrateAmbientNoise);
         }
-        let average = sum / (bufferLength / 2);
 
-        const container = document.getElementById('candle-container');
+        function finalizeCalibration() {
+            isCalibrating = false;
+            if (calibrationSamples.length === 0) {
+                blowThreshold = 80; // Fallback
+                return;
+            }
+            var total = 0;
+            for (var i = 0; i < calibrationSamples.length; i++) {
+                total += calibrationSamples[i];
+            }
+            var ambientAverage = total / calibrationSamples.length;
+            // Set threshold: ambient × 4, clamped between 50 and 150
+            blowThreshold = Math.min(150, Math.max(50, ambientAverage * 4));
+            calibrationSamples = [];
+        }
 
-        if (average > 10 && average < 80) {
-            let intensity = (average - 10) / 70;
-            container.style.setProperty('--blow-scale', Math.max(0.3, 1 - (intensity * 0.7)));
-            container.style.setProperty('--blow-skew', `${intensity * -60}deg`);
-            container.style.setProperty('--blow-x', `${intensity * -25}px`);
-        } else if (average <= 10) {
+        // --- Blow detection using adaptive threshold ---
+        function detectBlow() {
+            if (isBlownOut || !isHoldingBase) return;
+
+            analyser.getByteFrequencyData(dataArray);
+            var sum = 0;
+            for (var i = 0; i < bufferLength / 2; i++) {
+                sum += dataArray[i];
+            }
+            var average = sum / (bufferLength / 2);
+
+            var container = document.getElementById('candle-container');
+            // Flame-flicker zone: between ambient+5 and threshold
+            var flickerFloor = Math.max(10, blowThreshold * 0.15);
+
+            if (average > flickerFloor && average < blowThreshold) {
+                var intensity = (average - flickerFloor) / (blowThreshold - flickerFloor);
+                container.style.setProperty('--blow-scale', Math.max(0.3, 1 - (intensity * 0.7)));
+                container.style.setProperty('--blow-skew', (intensity * -60) + 'deg');
+                container.style.setProperty('--blow-x', (intensity * -25) + 'px');
+            } else if (average <= flickerFloor) {
+                container.style.setProperty('--blow-scale', '1');
+                container.style.setProperty('--blow-skew', '0deg');
+                container.style.setProperty('--blow-x', '0px');
+            }
+
+            if (average >= blowThreshold && !blowGracePeriod) {
+                isBlownOut = true;
+
+                document.getElementById('num-left').classList.remove('lit');
+                document.getElementById('num-left').classList.add('blown-out');
+
+                document.getElementById('num-right').classList.remove('lit');
+                document.getElementById('num-right').classList.add('blown-out');
+
+                document.getElementById('candle-container').classList.remove('ready');
+
+                // Minimalist reveal message
+                var msg = document.getElementById('message');
+                msg.className = '';
+                msg.innerText = "Happy 33rd, Jasmin";
+                // Trigger the smooth birthday reveal animation
+                void msg.offsetWidth; // force reflow
+                msg.classList.add('birthday-reveal');
+
+                releaseLightOrbs();
+
+                // Stop the looping "ha" audio and play "ppy birthday"
+                audioLoop.pause();
+                audioLoop.currentTime = 0;
+                audioBlow.play().catch(function () { });
+
+                // Hide volume hint
+                document.getElementById('volume-hint').classList.remove('visible');
+
+                // Show replay button after a moment
+                setTimeout(function () {
+                    var replayBtn = document.getElementById('replay-btn');
+                    replayBtn.style.display = 'inline-block';
+                    // Force reflow before adding visible for CSS transition
+                    void replayBtn.offsetWidth;
+                    replayBtn.classList.add('visible');
+                }, 3000);
+
+                // Clean up mic
+                try {
+                    audioStream.getTracks().forEach(function (track) { track.stop(); });
+                    if (audioContext.state !== 'closed') audioContext.close();
+                } catch (e) { /* ignore cleanup errors */ }
+            } else {
+                requestAnimationFrame(detectBlow);
+            }
+        }
+
+        var candleBase = document.getElementById('candle-base');
+
+        function startHolding(e) {
+            e.preventDefault();
+            if (!isBlownOut && document.getElementById('candle-container').classList.contains('ready')) {
+                isHoldingBase = true;
+                audioLoop.volume = 0.25;
+                blowGracePeriod = true;
+                setTimeout(function () { blowGracePeriod = false; }, 750);
+                var msg = document.getElementById('message');
+                msg.innerText = "Breathe Out";
+                msg.classList.add('visible');
+                detectBlow();
+            }
+        }
+
+        function stopHolding(e) {
+            // Only preventDefault if we were actually holding the candle base
+            if (isHoldingBase && !isBlownOut) {
+                e.preventDefault();
+                isHoldingBase = false;
+                audioLoop.volume = 1.0;
+                var msg = document.getElementById('message');
+                msg.innerText = "Make A Wish";
+                msg.classList.add('visible');
+                var container = document.getElementById('candle-container');
+                container.style.setProperty('--blow-scale', '1');
+                container.style.setProperty('--blow-skew', '0deg');
+                container.style.setProperty('--blow-x', '0px');
+            }
+        }
+
+        candleBase.addEventListener('mousedown', startHolding);
+        window.addEventListener('mouseup', stopHolding);
+        candleBase.addEventListener('touchstart', startHolding, { passive: false });
+        window.addEventListener('touchend', stopHolding);
+
+        // --- Inline error display (replaces alert) ---
+        function showError(text, wasDenied) {
+            var startBtn = document.getElementById('start-btn');
+            startBtn.style.display = 'none';
+
+            var errorEl = document.getElementById('error-msg');
+
+            // If mic was denied more than once, the browser (Firefox) has cached
+            // the denial and won't re-prompt — offer a page reload instead.
+            if (wasDenied && micDeniedCount > 1) {
+                // Firefox (and some browsers) cache permission denials and only
+                // reset them on a true user-initiated refresh (F5 / pull-to-refresh).
+                // JavaScript cannot trigger this, so we show a friendly instruction.
+                errorEl.innerHTML = text +
+                    '<br>Please refresh the page to try again' +
+                    '<br><span style="opacity:0.5;font-size:0.9em;letter-spacing:1px">' +
+                    '(F5 on desktop · pull down on mobile)</span>';
+                errorEl.classList.add('visible');
+            } else {
+                errorEl.innerHTML = text + '<br><span class="retry-link" id="retry-link">Try Again</span>';
+                errorEl.classList.add('visible');
+                var retryLink = document.getElementById('retry-link');
+                retryLink.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    hideError();
+                    ignite(document.getElementById('start-btn'));
+                });
+                retryLink.addEventListener('touchend', function (e) {
+                    e.preventDefault();
+                    hideError();
+                    ignite(document.getElementById('start-btn'));
+                });
+            }
+        }
+
+        function hideError() {
+            var errorEl = document.getElementById('error-msg');
+            errorEl.classList.remove('visible');
+            errorEl.innerHTML = '';
+            var startBtn = document.getElementById('start-btn');
+            startBtn.style.display = '';
+            startBtn.style.visibility = 'visible';
+            startBtn.style.pointerEvents = 'auto';
+            startBtn.style.opacity = '1';
+            startBtn.innerText = 'Ignite';
+            startBtn.dataset.igniting = 'false';
+        }
+
+        // --- Reset everything for replay ---
+        function resetExperience() {
+            // Stop any playing audio
+            audioLoop.pause();
+            audioLoop.currentTime = 0;
+            audioBlow.pause();
+            audioBlow.currentTime = 0;
+
+            // Clean up mic/audio context if still open
+            try {
+                if (audioStream) audioStream.getTracks().forEach(function (track) { track.stop(); });
+                if (audioContext && audioContext.state !== 'closed') audioContext.close();
+            } catch (e) { /* ignore */ }
+
+            // Reset state
+            audioContext = null;
+            analyser = null;
+            microphone = null;
+            isBlownOut = false;
+            isHoldingBase = false;
+            blowGracePeriod = false;
+            dataArray = null;
+            bufferLength = 0;
+            audioStream = null;
+            blowThreshold = 80;
+            calibrationSamples = [];
+            isCalibrating = false;
+
+            // Reset candle DOM
+            var numLeft = document.getElementById('num-left');
+            var numRight = document.getElementById('num-right');
+            numLeft.classList.remove('lit', 'blown-out');
+            numRight.classList.remove('lit', 'blown-out');
+
+            var container = document.getElementById('candle-container');
+            container.classList.remove('ready');
             container.style.setProperty('--blow-scale', '1');
             container.style.setProperty('--blow-skew', '0deg');
             container.style.setProperty('--blow-x', '0px');
-        }
 
-        if (average >= 80 && !blowGracePeriod) {
-            isBlownOut = true;
+            // Reset match animation
+            var match = document.getElementById('match');
+            match.classList.remove('animate-match');
 
-            document.getElementById('num-left').classList.remove('lit');
-            document.getElementById('num-left').classList.add('blown-out');
-
-            document.getElementById('num-right').classList.remove('lit');
-            document.getElementById('num-right').classList.add('blown-out');
-
-            document.getElementById('candle-container').classList.remove('ready');
-
-            // Minimalist reveal message
-            const msg = document.getElementById('message');
+            // Reset message
+            var msg = document.getElementById('message');
             msg.className = '';
-            msg.innerText = "Happy 33rd, Jasmin";
-            // Trigger the smooth birthday reveal animation
-            void msg.offsetWidth; // force reflow
-            msg.classList.add('birthday-reveal');
+            msg.innerText = '';
 
-            releaseLightOrbs();
-
-            // Stop the looping "ha" audio and play "ppy birthday"
-            audioLoop.pause();
-            audioLoop.currentTime = 0;
-            audioBlow.play().catch(() => {});
+            // Hide replay button
+            var replayBtn = document.getElementById('replay-btn');
+            replayBtn.classList.remove('visible');
+            replayBtn.style.display = 'none';
 
             // Hide volume hint
             document.getElementById('volume-hint').classList.remove('visible');
 
-            audioStream.getTracks().forEach(track => track.stop());
-            if (audioContext.state !== 'closed') audioContext.close();
-        } else {
-            requestAnimationFrame(detectBlow);
+            // Remove any leftover orbs
+            var orbs = document.querySelectorAll('.orb');
+            for (var i = 0; i < orbs.length; i++) {
+                orbs[i].remove();
+            }
+
+            // Show ignite button again
+            var startBtn = document.getElementById('start-btn');
+            startBtn.style.visibility = 'visible';
+            startBtn.style.pointerEvents = 'auto';
+            startBtn.style.display = '';
+            startBtn.innerText = 'Ignite';
+            startBtn.style.opacity = '1';
+            startBtn.dataset.igniting = 'false';
         }
-    }
 
-    const candleBase = document.getElementById('candle-base');
+        async function ignite(btn) {
+            // Prevent double-tap
+            if (btn.dataset.igniting === 'true') return;
+            btn.dataset.igniting = 'true';
 
-    function startHolding(e) {
-        e.preventDefault();
-        if (!isBlownOut && document.getElementById('candle-container').classList.contains('ready')) {
-            isHoldingBase = true;
-            audioLoop.volume = 0.25;
-            blowGracePeriod = true;
-            setTimeout(() => { blowGracePeriod = false; }, 750);
-            const msg = document.getElementById('message');
-            msg.innerText = "Breathe Out";
-            msg.classList.add('visible');
-            detectBlow();
+            btn.innerText = "Lighting...";
+            btn.style.opacity = "0.5";
+
+            try {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    throw new Error("Microphone not available — please use HTTPS.");
+                }
+
+                audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+                // iOS Safari requires an explicit resume within a user gesture
+                if (audioContext.state === 'suspended') {
+                    await audioContext.resume();
+                }
+
+                analyser = audioContext.createAnalyser();
+                microphone = audioContext.createMediaStreamSource(audioStream);
+
+                microphone.connect(analyser);
+                analyser.fftSize = 512;
+
+                bufferLength = analyser.frequencyBinCount;
+                dataArray = new Uint8Array(bufferLength);
+
+                btn.style.visibility = 'hidden';
+                btn.style.pointerEvents = 'none';
+                var msg = document.getElementById('message');
+                msg.innerText = "";
+                msg.classList.remove('visible', 'birthday-reveal');
+
+                // Show volume hint
+                document.getElementById('volume-hint').classList.add('visible');
+
+                // Start ambient noise calibration during match animation
+                isCalibrating = true;
+                calibrationSamples = [];
+                calibrateAmbientNoise();
+
+                var match = document.getElementById('match');
+                match.classList.add('animate-match');
+
+                // The sweeping animation is slightly slower now, so the timings are adjusted
+                setTimeout(function () { document.getElementById('num-right').classList.add('lit'); }, 1400);
+                setTimeout(function () { document.getElementById('num-left').classList.add('lit'); }, 1900);
+
+                // Start the looping "ha" audio once both candles are lit
+                setTimeout(function () {
+                    audioLoop.play().catch(function () { });
+                }, 1900);
+
+                // Finalize calibration and enable interaction
+                setTimeout(function () {
+                    finalizeCalibration();
+                    document.getElementById('candle-container').classList.add('ready');
+                    var msg = document.getElementById('message');
+                    msg.innerText = "Make A Wish";
+                    msg.classList.add('visible');
+                }, 3000);
+
+            } catch (err) {
+                console.error(err);
+                var errorText = 'Microphone access is needed to blow out the candles';
+                var wasDenied = false;
+                if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+                    errorText = 'Microphone permission was denied — please allow access';
+                    micDeniedCount++;
+                    wasDenied = true;
+                } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+                    errorText = 'No microphone found on this device';
+                } else if (err.message) {
+                    errorText = err.message;
+                }
+                showError(errorText, wasDenied);
+                btn.dataset.igniting = 'false';
+            }
         }
-    }
 
-    function stopHolding(e) {
-        // Only preventDefault if we were actually holding the candle base
-        if (isHoldingBase && !isBlownOut) {
+        var startBtn = document.getElementById('start-btn');
+        startBtn.addEventListener('click', function (e) {
+            ignite(this);
+        });
+        // Ensure it also works on mobile via touchend in case click is not synthesized
+        startBtn.addEventListener('touchend', function (e) {
             e.preventDefault();
-            isHoldingBase = false;
-            audioLoop.volume = 1.0;
-            const msg = document.getElementById('message');
-            msg.innerText = "Make A Wish";
-            msg.classList.add('visible');
-            const container = document.getElementById('candle-container');
-            container.style.setProperty('--blow-scale', '1');
-            container.style.setProperty('--blow-skew', '0deg');
-            container.style.setProperty('--blow-x', '0px');
-        }
-    }
+            ignite(this);
+        });
 
-    candleBase.addEventListener('mousedown', startHolding);
-    window.addEventListener('mouseup', stopHolding);
-    candleBase.addEventListener('touchstart', startHolding, {passive: false});
-    window.addEventListener('touchend', stopHolding);
-
-    async function ignite(btn) {
-        // Prevent double-tap
-        if (btn.dataset.igniting === 'true') return;
-        btn.dataset.igniting = 'true';
-
-        btn.innerText = "Lighting...";
-        btn.style.opacity = "0.5";
-
-        try {
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                throw new Error("Microphone API not available. Make sure you're using HTTPS.");
-            }
-
-            audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-            // iOS Safari requires an explicit resume within a user gesture
-            if (audioContext.state === 'suspended') {
-                await audioContext.resume();
-            }
-
-            analyser = audioContext.createAnalyser();
-            microphone = audioContext.createMediaStreamSource(audioStream);
-
-            microphone.connect(analyser);
-            analyser.fftSize = 512;
-
-            bufferLength = analyser.frequencyBinCount;
-            dataArray = new Uint8Array(bufferLength);
-
-            btn.style.visibility = 'hidden';
-            btn.style.pointerEvents = 'none';
-            const msg = document.getElementById('message');
-            msg.innerText = "";
-            msg.classList.remove('visible', 'birthday-reveal');
-
-            // Show volume hint
-            document.getElementById('volume-hint').classList.add('visible');
-
-            const match = document.getElementById('match');
-            match.classList.add('animate-match');
-
-            // The sweeping animation is slightly slower now, so the timings are adjusted
-            setTimeout(() => { document.getElementById('num-right').classList.add('lit'); }, 1400);
-            setTimeout(() => { document.getElementById('num-left').classList.add('lit'); }, 1900);
-
-            // Start the looping "ha" audio once both candles are lit
-            setTimeout(() => {
-                audioLoop.play().catch(() => {});
-            }, 1900);
-
-            setTimeout(() => {
-                document.getElementById('candle-container').classList.add('ready');
-                const msg = document.getElementById('message');
-                msg.innerText = "Make A Wish";
-                msg.classList.add('visible');
-            }, 3000);
-
-        } catch (err) {
-            alert("Please allow microphone access to ignite the candles. " + err.message);
-            console.error(err);
-            btn.innerText = "Ignite";
-            btn.style.opacity = "1";
-            btn.dataset.igniting = 'false';
-        }
-    }
-
-    const startBtn = document.getElementById('start-btn');
-    startBtn.addEventListener('click', function(e) {
-        ignite(this);
-    });
-    // Ensure it also works on mobile via touchend in case click is not synthesized
-    startBtn.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        ignite(this);
-    });
-</script>
+        // --- Replay button handlers ---
+        var replayBtn = document.getElementById('replay-btn');
+        replayBtn.addEventListener('click', function (e) {
+            resetExperience();
+        });
+        replayBtn.addEventListener('touchend', function (e) {
+            e.preventDefault();
+            resetExperience();
+        });
+    </script>
 </body>
+
 </html>
