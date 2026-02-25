@@ -113,6 +113,7 @@ h1.birthday-reveal {
     /* Creates a soft, glowing gradient text */
     background: linear-gradient(180deg, #e0ffff 0%, #40e0d0 50%, #1a8070 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
     filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.5));
     opacity: 0.9;
