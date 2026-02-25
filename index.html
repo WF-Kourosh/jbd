@@ -204,12 +204,39 @@
             border-radius: 50% 50% 20% 20%;
             box-shadow: 0 0 15px rgba(255, 223, 112, 0.6), 0 0 40px rgba(255, 140, 0, 0.4);
             opacity: 0;
+            -webkit-transition: opacity 0.5s ease, transform 0.1s ease-out;
             transition: opacity 0.5s ease, transform 0.1s ease-out;
         }
 
         .number-candle.lit .flame {
             opacity: 1;
             animation: flicker 3s infinite ease-in-out;
+        }
+
+        /* In touch mode, enlarge the flame hit area for easier swiping */
+        .touch-mode .flame {
+            cursor: pointer;
+        }
+
+        /* Prevent text selection during drag in touch mode */
+        .touch-mode {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the candle base in touch mode (not used) */
+        .touch-mode .candle-base {
+            display: none !important;
+        }
+
+        /* Flame shrinks when touched before going out */
+        .flame.touched {
+            -webkit-transition: transform 0.3s ease, opacity 0.4s ease;
+            transition: transform 0.3s ease, opacity 0.4s ease;
+            transform: translateX(-50%) scaleY(0.2) scaleX(0.3) !important;
+            opacity: 0.3 !important;
         }
 
         @keyframes flicker {
@@ -262,17 +289,20 @@
         .number-candle.blown-out .flame {
             opacity: 0;
             animation: none;
+            -webkit-transition: opacity 0.2s ease;
             transition: opacity 0.2s ease;
         }
 
         /* Warm ambient glow cast by the flames onto the numbers */
         .number-candle.lit .number {
             filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.5)) drop-shadow(0 -30px 40px rgba(255, 200, 80, 0.15));
+            -webkit-transition: filter 1s ease;
             transition: filter 1s ease;
         }
 
         .number-candle.blown-out .number {
             filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.5));
+            -webkit-transition: filter 1.5s ease;
             transition: filter 1.5s ease;
         }
 
@@ -550,6 +580,7 @@
 
     <button id="start-btn">Ignite</button>
     <button id="replay-btn">Replay ✨</button>
+    <button id="touch-mode-btn" style="display:none">Use Touch Instead</button>
 
     <div class="error-message" id="error-msg"></div>
 
@@ -573,6 +604,8 @@
         var calibrationSamples = [];
         var isCalibrating = false;
         var micDeniedCount = 0;
+        var touchMode = false;
+        var flamesExtinguished = 0;
 
         // Audio elements
         var audioLoop = document.getElementById('audio-loop');
@@ -663,42 +696,7 @@
             }
 
             if (average >= blowThreshold && !blowGracePeriod) {
-                isBlownOut = true;
-
-                document.getElementById('num-left').classList.remove('lit');
-                document.getElementById('num-left').classList.add('blown-out');
-
-                document.getElementById('num-right').classList.remove('lit');
-                document.getElementById('num-right').classList.add('blown-out');
-
-                document.getElementById('candle-container').classList.remove('ready');
-
-                // Minimalist reveal message
-                var msg = document.getElementById('message');
-                msg.className = '';
-                msg.innerText = "Happy 33rd, Jasmin";
-                // Trigger the smooth birthday reveal animation
-                void msg.offsetWidth; // force reflow
-                msg.classList.add('birthday-reveal');
-
-                releaseLightOrbs();
-
-                // Stop the looping "ha" audio and play "ppy birthday"
-                audioLoop.pause();
-                audioLoop.currentTime = 0;
-                audioBlow.play().catch(function () { });
-
-                // Hide volume hint
-                document.getElementById('volume-hint').classList.remove('visible');
-
-                // Show replay button after a moment
-                setTimeout(function () {
-                    var replayBtn = document.getElementById('replay-btn');
-                    replayBtn.style.display = 'inline-block';
-                    // Force reflow before adding visible for CSS transition
-                    void replayBtn.offsetWidth;
-                    replayBtn.classList.add('visible');
-                }, 3000);
+                blowOutCandles();
 
                 // Clean up mic
                 try {
@@ -708,6 +706,46 @@
             } else {
                 requestAnimationFrame(detectBlow);
             }
+        }
+
+        // --- Shared blowout sequence (used by both mic and touch modes) ---
+        function blowOutCandles() {
+            if (isBlownOut) return;
+            isBlownOut = true;
+
+            document.getElementById('num-left').classList.remove('lit');
+            document.getElementById('num-left').classList.add('blown-out');
+
+            document.getElementById('num-right').classList.remove('lit');
+            document.getElementById('num-right').classList.add('blown-out');
+
+            document.getElementById('candle-container').classList.remove('ready');
+
+            // Minimalist reveal message
+            var msg = document.getElementById('message');
+            msg.className = '';
+            msg.innerText = "Happy 33rd, Jasmin";
+            // Trigger the smooth birthday reveal animation
+            void msg.offsetWidth; // force reflow
+            msg.classList.add('birthday-reveal');
+
+            releaseLightOrbs();
+
+            // Stop the looping "ha" audio and play "ppy birthday"
+            audioLoop.pause();
+            audioLoop.currentTime = 0;
+            audioBlow.play().catch(function () { });
+
+            // Hide volume hint
+            document.getElementById('volume-hint').classList.remove('visible');
+
+            // Show replay button after a generous moment
+            setTimeout(function () {
+                var replayBtn = document.getElementById('replay-btn');
+                replayBtn.style.display = 'inline-block';
+                void replayBtn.offsetWidth;
+                replayBtn.classList.add('visible');
+            }, 15000);
         }
 
         var candleBase = document.getElementById('candle-base');
@@ -755,16 +793,20 @@
             var errorEl = document.getElementById('error-msg');
 
             // If mic was denied more than once, the browser (Firefox) has cached
-            // the denial and won't re-prompt — offer a page reload instead.
+            // the denial and won't re-prompt — offer touch fallback.
             if (wasDenied && micDeniedCount > 1) {
-                // Firefox (and some browsers) cache permission denials and only
-                // reset them on a true user-initiated refresh (F5 / pull-to-refresh).
-                // JavaScript cannot trigger this, so we show a friendly instruction.
                 errorEl.innerHTML = text +
-                    '<br>Please refresh the page to try again' +
-                    '<br><span style="opacity:0.5;font-size:0.9em;letter-spacing:1px">' +
-                    '(F5 on desktop · pull down on mobile)</span>';
+                    '<br>You can still blow out the candles!' +
+                    '<br><span class="retry-link" id="touch-fallback-link">Use Touch Instead</span>';
                 errorEl.classList.add('visible');
+                var touchLink = document.getElementById('touch-fallback-link');
+                function startTouchFallback(e) {
+                    e.preventDefault();
+                    hideError();
+                    igniteTouchMode();
+                }
+                touchLink.addEventListener('click', startTouchFallback);
+                touchLink.addEventListener('touchend', startTouchFallback);
             } else {
                 errorEl.innerHTML = text + '<br><span class="retry-link" id="retry-link">Try Again</span>';
                 errorEl.classList.add('visible');
@@ -822,6 +864,9 @@
             blowThreshold = 80;
             calibrationSamples = [];
             isCalibrating = false;
+            touchMode = false;
+            flamesExtinguished = 0;
+            document.getElementById('candle-container').classList.remove('touch-mode');
 
             // Reset candle DOM
             var numLeft = document.getElementById('num-left');
@@ -971,6 +1016,124 @@
             e.preventDefault();
             resetExperience();
         });
+
+        // --- Touch/click fallback: ignite without mic, extinguish by swiping/dragging ---
+        function igniteTouchMode() {
+            touchMode = true;
+            flamesExtinguished = 0;
+            isBlownOut = false;
+
+            var startBtn = document.getElementById('start-btn');
+            startBtn.style.visibility = 'hidden';
+            startBtn.style.pointerEvents = 'none';
+
+            var msg = document.getElementById('message');
+            msg.innerText = '';
+            msg.classList.remove('visible', 'birthday-reveal');
+
+            // Show volume hint
+            document.getElementById('volume-hint').classList.add('visible');
+
+            var match = document.getElementById('match');
+            match.classList.add('animate-match');
+
+            setTimeout(function () { document.getElementById('num-right').classList.add('lit'); }, 1400);
+            setTimeout(function () { document.getElementById('num-left').classList.add('lit'); }, 1900);
+
+            setTimeout(function () {
+                audioLoop.play().catch(function () { });
+            }, 1900);
+
+            setTimeout(function () {
+                document.getElementById('candle-container').classList.add('ready');
+                document.getElementById('candle-container').classList.add('touch-mode');
+                var msg = document.getElementById('message');
+                msg.innerText = 'Swipe The Flames';
+                msg.classList.add('visible');
+                enableTouchBlowout();
+            }, 3000);
+        }
+
+        function enableTouchBlowout() {
+            var flames = document.querySelectorAll('.flame');
+            var numbersWrapper = document.querySelector('.numbers-wrapper');
+
+            // Track which candles have been touched
+            var candleTouched = { left: false, right: false };
+
+            function extinguishFlame(candle, side) {
+                if (candleTouched[side] || isBlownOut) return;
+                candleTouched[side] = true;
+                flamesExtinguished++;
+
+                // Find the flame in this candle and add touched class for shrink animation
+                var flame = candle.querySelector('.flame');
+                if (flame) flame.classList.add('touched');
+
+                // After shrink, blow out
+                setTimeout(function () {
+                    if (flame) flame.classList.remove('touched');
+                    candle.classList.remove('lit');
+                    candle.classList.add('blown-out');
+
+                    // If both flames are out, trigger birthday reveal
+                    if (flamesExtinguished >= 2) {
+                        blowOutCandles();
+                    }
+                }, 400);
+            }
+
+            // --- Touch events (mobile swipe) ---
+            function handleTouchMove(e) {
+                if (isBlownOut) return;
+                var touches = e.touches || e.changedTouches;
+                for (var t = 0; t < touches.length; t++) {
+                    var touch = touches[t];
+                    var el = document.elementFromPoint(touch.clientX, touch.clientY);
+                    if (!el) continue;
+                    var candle = el.closest('.number-candle');
+                    if (candle && candle.classList.contains('lit')) {
+                        var side = candle.id === 'num-left' ? 'left' : 'right';
+                        extinguishFlame(candle, side);
+                    }
+                }
+            }
+
+            // --- Mouse events (desktop click-drag) ---
+            var isDragging = false;
+
+            function handleMouseDown(e) {
+                if (isBlownOut) return;
+                e.preventDefault(); // Prevent text selection while dragging
+                isDragging = true;
+                checkMouseTarget(e);
+            }
+
+            function handleMouseMove(e) {
+                if (!isDragging || isBlownOut) return;
+                checkMouseTarget(e);
+            }
+
+            function handleMouseUp() {
+                isDragging = false;
+            }
+
+            function checkMouseTarget(e) {
+                var el = document.elementFromPoint(e.clientX, e.clientY);
+                if (!el) return;
+                var candle = el.closest('.number-candle');
+                if (candle && candle.classList.contains('lit')) {
+                    var side = candle.id === 'num-left' ? 'left' : 'right';
+                    extinguishFlame(candle, side);
+                }
+            }
+
+            numbersWrapper.addEventListener('touchmove', handleTouchMove, { passive: true });
+            numbersWrapper.addEventListener('touchstart', handleTouchMove, { passive: true });
+            numbersWrapper.addEventListener('mousedown', handleMouseDown);
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('mouseup', handleMouseUp);
+        }
     </script>
 </body>
 
