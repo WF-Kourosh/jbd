@@ -231,6 +231,42 @@
             display: none !important;
         }
 
+        /* Subtle hint below candles in touch mode */
+        .touch-hint {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(64, 224, 208, 0.5);
+            white-space: nowrap;
+            opacity: 0;
+            -webkit-transition: opacity 1s ease;
+            transition: opacity 1s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .touch-hint.visible {
+            opacity: 1;
+            animation: gentle-pulse 2.5s infinite ease-in-out;
+        }
+
+        @keyframes gentle-pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
         /* Flame shrinks when touched before going out */
         .flame.touched {
             -webkit-transition: transform 0.3s ease, opacity 0.4s ease;
@@ -287,10 +323,10 @@
         }
 
         .number-candle.blown-out .flame {
-            opacity: 0;
-            animation: none;
-            -webkit-transition: opacity 0.2s ease;
-            transition: opacity 0.2s ease;
+            opacity: 0 !important;
+            animation: none !important;
+            -webkit-transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
         /* Warm ambient glow cast by the flames onto the numbers */
@@ -576,6 +612,7 @@
         </div>
 
         <div class="candle-base" id="candle-base"><span>&</span><span>Touch</span></div>
+        <div class="touch-hint" id="touch-hint">tap the flames</div>
     </div>
 
     <button id="start-btn">Ignite</button>
@@ -591,6 +628,11 @@
     <audio id="audio-blow" src="audio/ppy-birthday.m4a" preload="auto"></audio>
 
     <script>
+        // =============================================
+        // CONFIG: Toggle features on/off
+        // =============================================
+        var SHOW_REPLAY_BUTTON = false; // Set to true to show the replay button after blowout
+
         var audioContext;
         var analyser;
         var microphone;
@@ -739,13 +781,15 @@
             // Hide volume hint
             document.getElementById('volume-hint').classList.remove('visible');
 
-            // Show replay button after a generous moment
-            setTimeout(function () {
-                var replayBtn = document.getElementById('replay-btn');
-                replayBtn.style.display = 'inline-block';
-                void replayBtn.offsetWidth;
-                replayBtn.classList.add('visible');
-            }, 15000);
+            // Show replay button after a generous moment (if enabled)
+            if (SHOW_REPLAY_BUTTON) {
+                setTimeout(function () {
+                    var replayBtn = document.getElementById('replay-btn');
+                    replayBtn.style.display = 'inline-block';
+                    void replayBtn.offsetWidth;
+                    replayBtn.classList.add('visible');
+                }, 15000);
+            }
         }
 
         var candleBase = document.getElementById('candle-base');
@@ -873,6 +917,16 @@
             var numRight = document.getElementById('num-right');
             numLeft.classList.remove('lit', 'blown-out');
             numRight.classList.remove('lit', 'blown-out');
+
+            // Clear touched class from flames
+            var allFlames = document.querySelectorAll('.flame');
+            for (var i = 0; i < allFlames.length; i++) {
+                allFlames[i].classList.remove('touched');
+            }
+
+            // Hide touch hint
+            var touchHint = document.getElementById('touch-hint');
+            if (touchHint) touchHint.classList.remove('visible');
 
             var container = document.getElementById('candle-container');
             container.classList.remove('ready');
@@ -1048,8 +1102,11 @@
                 document.getElementById('candle-container').classList.add('ready');
                 document.getElementById('candle-container').classList.add('touch-mode');
                 var msg = document.getElementById('message');
-                msg.innerText = 'Swipe The Flames';
+                msg.innerText = 'Make A Wish';
                 msg.classList.add('visible');
+                // Show subtle hint below candles
+                var hint = document.getElementById('touch-hint');
+                hint.classList.add('visible');
                 enableTouchBlowout();
             }, 3000);
         }
@@ -1070,14 +1127,16 @@
                 var flame = candle.querySelector('.flame');
                 if (flame) flame.classList.add('touched');
 
-                // After shrink, blow out
+                // After shrink, blow out (don't remove 'touched' — blown-out overrides it)
                 setTimeout(function () {
-                    if (flame) flame.classList.remove('touched');
                     candle.classList.remove('lit');
                     candle.classList.add('blown-out');
 
                     // If both flames are out, trigger birthday reveal
                     if (flamesExtinguished >= 2) {
+                        // Hide the touch hint
+                        var hint = document.getElementById('touch-hint');
+                        if (hint) hint.classList.remove('visible');
                         blowOutCandles();
                     }
                 }, 400);
